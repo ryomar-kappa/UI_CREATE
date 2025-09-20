@@ -1,0 +1,1 @@
+// Hook for overall Beauty Genius state management

@@ -1,0 +1,1 @@
+// Main Beauty Genius modal component
