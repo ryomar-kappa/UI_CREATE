@@ -93,16 +93,11 @@ export const BeautyGeniusWorkflow: React.FC<BeautyGeniusWorkflowProps> = ({
 
       setAnalysisResult(analysisResult);
       setAnalysisStatus('complete');
-
-      // Auto-advance to next step after analysis completion
-      setTimeout(() => {
-        nextStep();
-      }, 2000); // 2秒後に自動的に次のステップに進む
     } catch (error) {
       console.error('Analysis failed:', error);
       setAnalysisStatus('error');
     }
-  }, [setImage, setAnalysisStatus, setUploadProgress, setAnalysisResult, nextStep]);
+  }, [setImage, setAnalysisStatus, setUploadProgress, setAnalysisResult]);
 
   // Handle step navigation
   const handleNext = useCallback(() => {

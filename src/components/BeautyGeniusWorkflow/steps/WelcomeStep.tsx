@@ -26,18 +26,18 @@ export const WelcomeStep: React.FC<StepComponentProps> = ({
           className="text-3xl font-bold text-gray-900"
           style={{ fontFamily: typography.fontFamily.primary }}
         >
-          Beauty Genius
+          ビューティー ジーニアス
         </h1>
       </motion.div>
 
       {/* Welcome Message */}
       <motion.div variants={staggerItem} className="space-y-4">
         <h2 className="text-xl font-semibold text-gray-800">
-          Welcome to your personalized beauty journey
+          あなた専用のビューティージャーニーへようこそ
         </h2>
         <p className="text-gray-600 leading-relaxed">
-          Our AI-powered analysis will help you discover your unique skin type
-          and find the perfect skincare routine tailored just for you.
+          AI による分析で、あなたの肌タイプを発見し、
+          あなたにぴったりのスキンケアルーティンをご提案します。
         </p>
       </motion.div>
 
@@ -52,7 +52,7 @@ export const WelcomeStep: React.FC<StepComponentProps> = ({
               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
             </svg>
           </div>
-          <span className="text-gray-700">AI-powered skin analysis</span>
+          <span className="text-gray-700">AI による肌分析</span>
         </div>
 
         <div className="flex items-center space-x-3 text-left">
@@ -64,7 +64,7 @@ export const WelcomeStep: React.FC<StepComponentProps> = ({
               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
             </svg>
           </div>
-          <span className="text-gray-700">Personalized product recommendations</span>
+          <span className="text-gray-700">パーソナライズされた商品推奨</span>
         </div>
 
         <div className="flex items-center space-x-3 text-left">
@@ -76,14 +76,14 @@ export const WelcomeStep: React.FC<StepComponentProps> = ({
               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
             </svg>
           </div>
-          <span className="text-gray-700">Expert skincare guidance</span>
+          <span className="text-gray-700">専門家によるスキンケアガイダンス</span>
         </div>
       </motion.div>
 
       {/* Privacy Note */}
       <motion.div variants={staggerItem}>
         <p className="text-sm text-gray-500">
-          🔒 Your data is secure and will only be used to provide personalized recommendations
+          🔒 あなたのデータは安全に保護され、パーソナライズされた推奨のためだけに使用されます
         </p>
       </motion.div>
 
@@ -97,7 +97,7 @@ export const WelcomeStep: React.FC<StepComponentProps> = ({
           className="w-full py-3 px-6 rounded-lg font-medium text-white shadow-md transition-all duration-300"
           style={{ backgroundColor: colors.accent.main }}
         >
-          Start Your Beauty Analysis
+          ビューティー分析を開始
         </motion.button>
 
         {onClose && (
@@ -108,7 +108,7 @@ export const WelcomeStep: React.FC<StepComponentProps> = ({
             onClick={onClose}
             className="w-full py-3 px-6 rounded-lg font-medium text-gray-600 border border-gray-300 hover:bg-gray-50 transition-all duration-300"
           >
-            Maybe Later
+            後で分析する
           </motion.button>
         )}
       </motion.div>

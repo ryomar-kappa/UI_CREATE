@@ -35,11 +35,10 @@ export const AgeInputStep: React.FC<AgeInputProps> = ({
       {/* Header */}
       <motion.div variants={staggerItem} className="space-y-4">
         <h2 className="text-2xl font-bold text-gray-900">
-          What's your age?
+          あなたの年齢を教えてください
         </h2>
         <p className="text-gray-600">
-          Age helps us provide more accurate skincare recommendations
-          tailored to your skin's needs at this stage of life.
+          年齢を教えていただくことで、今のライフステージに合わせたより正確なスキンケア提案が可能になります。
         </p>
       </motion.div>
 
@@ -61,7 +60,7 @@ export const AgeInputStep: React.FC<AgeInputProps> = ({
                 : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-300'
               }
             `}
-            aria-label="Decrease age"
+            aria-label="年齢を下げる"
           >
             −
           </motion.button>
@@ -78,7 +77,7 @@ export const AgeInputStep: React.FC<AgeInputProps> = ({
               {age}
             </div>
             <div className="text-sm text-gray-500">
-              years old
+              歳
             </div>
           </motion.div>
 
@@ -97,7 +96,7 @@ export const AgeInputStep: React.FC<AgeInputProps> = ({
                 : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-300'
               }
             `}
-            aria-label="Increase age"
+            aria-label="年齢を上げる"
           >
             +
           </motion.button>
@@ -115,7 +114,7 @@ export const AgeInputStep: React.FC<AgeInputProps> = ({
             style={{
               background: `linear-gradient(to right, ${colors.accent.main} 0%, ${colors.accent.main} ${((age - 18) / (100 - 18)) * 100}%, #e5e7eb ${((age - 18) / (100 - 18)) * 100}%, #e5e7eb 100%)`
             }}
-            aria-label="Select your age"
+            aria-label="年齢を選択"
           />
           <div className="flex justify-between text-xs text-gray-500 mt-1">
             <span>18</span>
@@ -127,12 +126,10 @@ export const AgeInputStep: React.FC<AgeInputProps> = ({
       {/* Age Range Info */}
       <motion.div variants={staggerItem} className="bg-blue-50 rounded-lg p-4">
         <h3 className="font-medium text-blue-900 mb-2">
-          💡 Why we ask for your age
+          💡 年齢をお伺いする理由
         </h3>
         <p className="text-sm text-blue-800">
-          Skin changes throughout different life stages. Knowing your age helps us recommend
-          products that address age-specific concerns like prevention in your 20s,
-          maintenance in your 30s, or anti-aging in your 40s and beyond.
+          肌はライフステージごとに変化します。年齢を把握することで、20代の予防、30代の維持、40代以降のエイジングケアなど、年代特有の悩みに合った製品をご提案できます。
         </p>
       </motion.div>
 
@@ -146,7 +143,7 @@ export const AgeInputStep: React.FC<AgeInputProps> = ({
           className="w-full py-3 px-6 rounded-lg font-medium text-white shadow-md"
           style={{ backgroundColor: colors.accent.main }}
         >
-          Continue Analysis
+          分析を続ける
         </motion.button>
 
         <div className="flex space-x-3">
@@ -158,7 +155,7 @@ export const AgeInputStep: React.FC<AgeInputProps> = ({
               onClick={onBack}
               className="flex-1 py-3 px-6 rounded-lg font-medium text-gray-600 border border-gray-300 hover:bg-gray-50"
             >
-              Back
+              戻る
             </motion.button>
           )}
 
@@ -170,7 +167,7 @@ export const AgeInputStep: React.FC<AgeInputProps> = ({
               onClick={onClose}
               className="flex-1 py-3 px-6 rounded-lg font-medium text-gray-600 border border-gray-300 hover:bg-gray-50"
             >
-              Close
+              閉じる
             </motion.button>
           )}
         </div>

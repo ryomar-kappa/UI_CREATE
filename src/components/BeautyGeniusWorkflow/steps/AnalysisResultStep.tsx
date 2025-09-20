@@ -15,53 +15,53 @@ const analysisSteps = [
 
 const skinTypeDescriptions: Record<SkinType, { title: string; description: string; icon: string; tips: string[] }> = {
   normal: {
-    title: "Normal Skin",
-    description: "Your skin is well-balanced with a smooth texture and healthy appearance.",
+    title: "普通肌",
+    description: "肌の水分と油分がバランス良く、なめらかで健康的な状態です。",
     icon: "✨",
     tips: [
-      "Maintain with gentle daily cleansing",
-      "Use a light moisturizer",
-      "Apply SPF daily",
+      "毎日のやさしい洗顔でコンディションを保ちましょう",
+      "軽めの保湿剤を使いましょう",
+      "毎日日焼け止めを塗りましょう",
     ],
   },
   dry: {
-    title: "Dry Skin",
-    description: "Your skin may feel tight and could benefit from extra hydration.",
+    title: "乾燥肌",
+    description: "肌がつっぱりやすく、十分な保湿が必要な状態です。",
     icon: "💧",
     tips: [
-      "Use a cream-based cleanser",
-      "Apply rich moisturizer twice daily",
-      "Consider a hydrating serum",
+      "クリームタイプの洗顔料を使いましょう",
+      "朝晩2回、こっくりした保湿クリームでケアしましょう",
+      "保湿力の高い美容液を取り入れましょう",
     ],
   },
   oily: {
-    title: "Oily Skin",
-    description: "Your skin produces more oil, which may lead to shine and enlarged pores.",
+    title: "脂性肌",
+    description: "皮脂が多く分泌され、テカりや毛穴の目立ちにつながりやすい肌質です。",
     icon: "🌟",
     tips: [
-      "Use a gel-based cleanser",
-      "Apply oil-free moisturizer",
-      "Consider salicylic acid products",
+      "ジェルタイプの洗顔料でさっぱり洗いましょう",
+      "オイルフリーの保湿剤を使いましょう",
+      "サリチル酸配合のアイテムを検討しましょう",
     ],
   },
   combination: {
-    title: "Combination Skin",
-    description: "Your skin is oily in the T-zone but normal to dry on the cheeks.",
+    title: "混合肌",
+    description: "Tゾーンは脂っぽく、頬は普通〜乾燥傾向の肌質です。",
     icon: "🎭",
     tips: [
-      "Use different products for different areas",
-      "Gentle cleanser overall",
-      "Light moisturizer on T-zone, richer on cheeks",
+      "部位に合わせてアイテムを使い分けましょう",
+      "全体は刺激の少ない洗顔料でやさしく洗いましょう",
+      "Tゾーンは軽め、頬はしっかりめの保湿で調整しましょう",
     ],
   },
   sensitive: {
-    title: "Sensitive Skin",
-    description: "Your skin is reactive and may be easily irritated by certain ingredients.",
+    title: "敏感肌",
+    description: "刺激に反応しやすく、特定の成分で赤みや違和感が出やすい肌質です。",
     icon: "🌸",
     tips: [
-      "Use fragrance-free products",
-      "Patch test new products",
-      "Choose gentle, hypoallergenic formulas",
+      "無香料でシンプルな処方を選びましょう",
+      "新しいアイテムはパッチテストを行いましょう",
+      "低刺激で低アレルギー処方の製品を選びましょう",
     ],
   },
 };
@@ -109,7 +109,7 @@ export const AnalysisResultStep: React.FC<AnalysisResultProps> = ({
             <div className="animate-spin w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">
-            Analyzing Your Skin
+            肌を解析しています
           </h2>
         </motion.div>
 
@@ -137,7 +137,7 @@ export const AnalysisResultStep: React.FC<AnalysisResultProps> = ({
             className="p-4 bg-green-50 rounded-lg"
           >
             <p className="text-green-800 font-medium">
-              Analysis complete! Preparing your results...
+              分析が完了しました。結果を準備しています...
             </p>
           </motion.div>
         )}
@@ -160,7 +160,7 @@ export const AnalysisResultStep: React.FC<AnalysisResultProps> = ({
           <span className="text-3xl">{skinInfo.icon}</span>
         </div>
         <h2 className="text-2xl font-bold text-gray-900">
-          Your Skin Analysis
+          肌分析の結果
         </h2>
       </motion.div>
 
@@ -180,7 +180,7 @@ export const AnalysisResultStep: React.FC<AnalysisResultProps> = ({
             <div className="text-2xl font-bold" style={{ color: colors.accent.main }}>
               {Math.round(analysisResult.confidenceScore * 100)}%
             </div>
-            <div className="text-sm text-gray-500">Confidence</div>
+            <div className="text-sm text-gray-500">信頼度</div>
           </div>
 
           {analysisResult.ageEstimate && (
@@ -188,7 +188,7 @@ export const AnalysisResultStep: React.FC<AnalysisResultProps> = ({
               <div className="text-2xl font-bold" style={{ color: colors.accent.main }}>
                 {analysisResult.ageEstimate}
               </div>
-              <div className="text-sm text-gray-500">Estimated Age</div>
+              <div className="text-sm text-gray-500">推定年齢</div>
             </div>
           )}
         </div>
@@ -197,7 +197,7 @@ export const AnalysisResultStep: React.FC<AnalysisResultProps> = ({
       {/* Skincare Tips */}
       <motion.div variants={staggerItem} className="bg-blue-50 rounded-lg p-6 space-y-4">
         <h3 className="font-bold text-blue-900">
-          💡 Recommended Care Tips
+          💡 おすすめのケア方法
         </h3>
         <ul className="space-y-2">
           {skinInfo.tips.map((tip, index) => (
@@ -213,7 +213,7 @@ export const AnalysisResultStep: React.FC<AnalysisResultProps> = ({
       {analysisResult.skinConcerns.length > 0 && (
         <motion.div variants={staggerItem} className="bg-yellow-50 rounded-lg p-6 space-y-4">
           <h3 className="font-bold text-yellow-900">
-            ⚠️ Areas to Focus On
+            ⚠️ 特にケアしたいポイント
           </h3>
           <ul className="space-y-2">
             {analysisResult.skinConcerns.map((concern, index) => (
@@ -236,7 +236,7 @@ export const AnalysisResultStep: React.FC<AnalysisResultProps> = ({
           className="w-full py-3 px-6 rounded-lg font-medium text-white shadow-md"
           style={{ backgroundColor: colors.accent.main }}
         >
-          See Product Recommendations
+          おすすめ製品を見る
         </motion.button>
 
         <div className="flex space-x-3">
@@ -248,7 +248,7 @@ export const AnalysisResultStep: React.FC<AnalysisResultProps> = ({
               onClick={onBack}
               className="flex-1 py-3 px-6 rounded-lg font-medium text-gray-600 border border-gray-300 hover:bg-gray-50"
             >
-              Back
+              戻る
             </motion.button>
           )}
 
@@ -260,7 +260,7 @@ export const AnalysisResultStep: React.FC<AnalysisResultProps> = ({
               onClick={onClose}
               className="flex-1 py-3 px-6 rounded-lg font-medium text-gray-600 border border-gray-300 hover:bg-gray-50"
             >
-              Close
+              閉じる
             </motion.button>
           )}
         </div>
