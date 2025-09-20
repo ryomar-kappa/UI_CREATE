@@ -16,6 +16,7 @@ const stepOrder: WorkflowStep[] = [
   WorkflowStep.WELCOME,
   WorkflowStep.IMAGE_UPLOAD,
   WorkflowStep.AGE_INPUT,
+  WorkflowStep.SKIN_ANALYSIS,
   WorkflowStep.ANALYSIS_RESULT,
   WorkflowStep.SKINCARE_RECOMMENDATION,
 ];

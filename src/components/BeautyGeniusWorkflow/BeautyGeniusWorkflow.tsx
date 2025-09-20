@@ -1,25 +1,29 @@
 // Beauty Genius workflow main component
 
-import React, { useCallback, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { useBeautyGeniusStore } from '../../store/beautyGeniusStore';
-import { WorkflowStep, BeautyGeniusWorkflowProps } from '../../types/beautyGenius';
-import { analyzeImage } from '../../utils/imageUtils';
-import { fadeInVariants } from '../../constants/animations';
-import { colors } from '../../constants/designTokens';
+import React, { useCallback, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { useBeautyGeniusStore } from "../../store/beautyGeniusStore";
+import {
+  WorkflowStep,
+  BeautyGeniusWorkflowProps,
+} from "../../types/beautyGenius";
+import { analyzeImage } from "../../utils/imageUtils";
+import { fadeInVariants } from "../../constants/animations";
+import { colors } from "../../constants/designTokens";
 
 // Import step components
-import { WelcomeStep } from './steps/WelcomeStep';
-import { ImageUploadStep } from './steps/ImageUploadStep';
-import { AgeInputStep } from './steps/AgeInputStep';
-import { AnalysisResultStep } from './steps/AnalysisResultStep';
+import { WelcomeStep } from "./steps/WelcomeStep";
+import { ImageUploadStep } from "./steps/ImageUploadStep";
+import { AgeInputStep } from "./steps/AgeInputStep";
+import { SkinAnalysisStep } from "./steps/SkinAnalysisStep";
+import { AnalysisResultStep } from "./steps/AnalysisResultStep";
 
 // Import common components
-import { StepTransition } from './components/StepTransition';
-import { ProgressIndicator } from './components/ProgressIndicator';
+import { StepTransition } from "./components/StepTransition";
+import { ProgressIndicator } from "./components/ProgressIndicator";
 
 export const BeautyGeniusWorkflow: React.FC<BeautyGeniusWorkflowProps> = ({
-  className = '',
+  className = "",
   onClose,
 }) => {
   const {
@@ -39,65 +43,96 @@ export const BeautyGeniusWorkflow: React.FC<BeautyGeniusWorkflowProps> = ({
     reset,
   } = useBeautyGeniusStore();
 
-  // Handle image upload and analysis
-  const handleImageUpload = useCallback(async (file: File) => {
-    try {
-      setImage(file);
-      setAnalysisStatus('uploading');
+  const uploadIntervalRef = useRef<number | null>(null);
 
-      // Simulate upload progress
-      let progress = 0;
-      const uploadInterval = setInterval(() => {
-        progress += 10;
-        setUploadProgress(progress);
-        if (progress >= 100) {
-          clearInterval(uploadInterval);
-          setAnalysisStatus('analyzing');
-        }
-      }, 100);
-
-      // Analyze image
-      const result = await analyzeImage(file);
-
-      // Create analysis result
-      const analysisResult = {
-        skinType: result.skinType as any,
-        confidenceScore: result.confidenceScore,
-        ageEstimate: result.ageEstimate,
-        skinConcerns: [
-          'Fine lines around eyes',
-          'Uneven skin tone',
-          'Enlarged pores on nose',
-        ],
-        recommendations: [
-          {
-            id: '1',
-            name: 'Hydrating Serum',
-            description: 'Boost skin moisture',
-            imageUrl: '/placeholder-product.jpg',
-            price: 45,
-            category: 'Serum',
-            benefits: ['Hydration', 'Plumping', 'Anti-aging'],
-          },
-          {
-            id: '2',
-            name: 'Gentle Cleanser',
-            description: 'Daily cleansing foam',
-            imageUrl: '/placeholder-product.jpg',
-            price: 25,
-            category: 'Cleanser',
-            benefits: ['Gentle', 'Effective', 'Non-drying'],
-          },
-        ],
-      };
-
-      setAnalysisResult(analysisResult);
-      setAnalysisStatus('complete');
-    } catch (error) {
-      console.error('Analysis failed:', error);
-      setAnalysisStatus('error');
+  const clearUploadInterval = useCallback(() => {
+    if (uploadIntervalRef.current !== null) {
+      clearInterval(uploadIntervalRef.current);
+      uploadIntervalRef.current = null;
     }
-  }, [setImage, setAnalysisStatus, setUploadProgress, setAnalysisResult]);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearUploadInterval();
+    };
+  }, [clearUploadInterval]);
+
+  // Handle image upload and analysis
+  const handleImageUpload = useCallback(
+    async (file: File) => {
+      try {
+        clearUploadInterval();
+        setImage(file);
+        setAnalysisResult(null);
+        setAnalysisStatus("uploading");
+        setUploadProgress(0);
+
+        // Simulate upload progress
+        let progress = 0;
+        uploadIntervalRef.current = window.setInterval(() => {
+          progress += 10;
+          setUploadProgress(progress);
+          if (progress >= 100) {
+            clearUploadInterval();
+            setUploadProgress(100);
+            setAnalysisStatus("uploaded");
+          }
+        }, 100);
+      } catch (error) {
+        console.error("Analysis failed:", error);
+        clearUploadInterval();
+        setAnalysisStatus("error");
+      }
+    },
+    [clearUploadInterval, setImage, setAnalysisResult, setAnalysisStatus, setUploadProgress]
+  );
+
+  const beginAnalysis = useCallback(
+    async (file: File) => {
+      try {
+        const result = await analyzeImage(file);
+
+        const analysisResult = {
+          skinType: result.skinType as any,
+          confidenceScore: result.confidenceScore,
+          ageEstimate: result.ageEstimate,
+          skinConcerns: [
+            "Fine lines around eyes",
+            "Uneven skin tone",
+            "Enlarged pores on nose",
+          ],
+          recommendations: [
+            {
+              id: "1",
+              name: "Hydrating Serum",
+              description: "Boost skin moisture",
+              imageUrl: "/placeholder-product.jpg",
+              price: 45,
+              category: "Serum",
+              benefits: ["Hydration", "Plumping", "Anti-aging"],
+            },
+            {
+              id: "2",
+              name: "Gentle Cleanser",
+              description: "Daily cleansing foam",
+              imageUrl: "/placeholder-product.jpg",
+              price: 25,
+              category: "Cleanser",
+              benefits: ["Gentle", "Effective", "Non-drying"],
+            },
+          ],
+        };
+
+        setAnalysisResult(analysisResult);
+        setAnalysisStatus("complete");
+      } catch (error) {
+        console.error("Analysis failed:", error);
+        setAnalysisStatus("error");
+      }
+    },
+    [setAnalysisResult, setAnalysisStatus]
+  );
 
   // Handle step navigation
   const handleNext = useCallback(() => {
@@ -142,9 +177,28 @@ export const BeautyGeniusWorkflow: React.FC<BeautyGeniusWorkflowProps> = ({
         return (
           <AgeInputStep
             {...commonProps}
+            onNext={() => {
+              if (!uploadedImage) {
+                console.warn("No image uploaded before analysis.");
+                return;
+              }
+
+              if (analysisStatus === "analyzing") {
+                nextStep();
+                return;
+              }
+              setAnalysisStatus("analyzing");
+              nextStep();
+              void beginAnalysis(uploadedImage);
+            }}
             age={userAge}
             onAgeChange={setAge}
           />
+        );
+
+      case WorkflowStep.SKIN_ANALYSIS:
+        return (
+          <SkinAnalysisStep {...commonProps} analysisStatus={analysisStatus} />
         );
 
       case WorkflowStep.ANALYSIS_RESULT:
@@ -152,7 +206,7 @@ export const BeautyGeniusWorkflow: React.FC<BeautyGeniusWorkflowProps> = ({
           <AnalysisResultStep
             {...commonProps}
             analysisResult={analysisResult}
-            isAnalyzing={analysisStatus === 'analyzing'}
+            isAnalyzing={analysisStatus === "analyzing"}
           />
         );
 
@@ -168,7 +222,8 @@ export const BeautyGeniusWorkflow: React.FC<BeautyGeniusWorkflowProps> = ({
               Product Recommendations
             </h2>
             <p className="text-gray-600">
-              Based on your skin analysis, here are our personalized recommendations.
+              Based on your skin analysis, here are our personalized
+              recommendations.
             </p>
 
             {analysisResult?.recommendations && (
@@ -179,9 +234,14 @@ export const BeautyGeniusWorkflow: React.FC<BeautyGeniusWorkflowProps> = ({
                     className="p-4 bg-white rounded-lg shadow-md border border-gray-200"
                   >
                     <h3 className="font-bold text-gray-900">{product.name}</h3>
-                    <p className="text-gray-600 text-sm">{product.description}</p>
+                    <p className="text-gray-600 text-sm">
+                      {product.description}
+                    </p>
                     <div className="mt-2 flex justify-between items-center">
-                      <span className="text-lg font-bold" style={{ color: colors.accent.main }}>
+                      <span
+                        className="text-lg font-bold"
+                        style={{ color: colors.accent.main }}
+                      >
                         ${product.price}
                       </span>
                       <button

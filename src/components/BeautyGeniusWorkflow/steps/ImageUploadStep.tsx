@@ -20,7 +20,7 @@ export const ImageUploadStep: React.FC<ImageUploadProps> = ({
   onBack,
   onClose,
 }) => {
-  const canProceed = analysisStatus === "complete";
+  const canProceed = analysisStatus === "uploaded";
 
   return (
     <motion.div
@@ -85,6 +85,35 @@ export const ImageUploadStep: React.FC<ImageUploadProps> = ({
             <h3 className="font-medium text-yellow-900">写真を分析中...</h3>
             <p className="text-sm text-yellow-800">
               AIが25,000枚以上のサンプルと比較して、あなたの肌タイプを判定しています。
+            </p>
+          </div>
+        </motion.div>
+      )}
+
+      {analysisStatus === "uploaded" && (
+        <motion.div
+          variants={fadeInVariants}
+          initial="initial"
+          animate="animate"
+          className="text-center space-y-4 p-6 bg-green-50 rounded-lg"
+        >
+          <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
+            <svg
+              className="w-8 h-8 text-green-600"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fillRule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-medium text-green-900">アップロード完了</h3>
+            <p className="text-sm text-green-800">
+              写真のアップロードが完了しました。準備ができたら次のステップに進んでください。
             </p>
           </div>
         </motion.div>

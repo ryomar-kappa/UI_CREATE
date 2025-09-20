@@ -13,6 +13,7 @@ const stepOrder: WorkflowStep[] = [
   WorkflowStep.WELCOME,
   WorkflowStep.IMAGE_UPLOAD,
   WorkflowStep.AGE_INPUT,
+  WorkflowStep.SKIN_ANALYSIS,
   WorkflowStep.ANALYSIS_RESULT,
   WorkflowStep.SKINCARE_RECOMMENDATION,
 ];
@@ -57,7 +58,14 @@ export const useBeautyGeniusStore = create<BeautyGeniusStore>((set, get) => ({
     const currentStep = get().currentStep;
     const currentIndex = stepOrder.indexOf(currentStep);
     if (currentIndex > 0) {
-      set({ currentStep: stepOrder[currentIndex - 1] });
+      let targetIndex = currentIndex - 1;
+      if (
+        stepOrder[targetIndex] === WorkflowStep.SKIN_ANALYSIS &&
+        targetIndex > 0
+      ) {
+        targetIndex -= 1;
+      }
+      set({ currentStep: stepOrder[targetIndex] });
     }
   },
 

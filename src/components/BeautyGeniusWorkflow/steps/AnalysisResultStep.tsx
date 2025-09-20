@@ -6,7 +6,7 @@ import { buttonVariants, fadeInVariants, staggerContainer, staggerItem } from '.
 import { colors } from '../../../constants/designTokens';
 import { AnalysisResultProps, SkinType } from '../../../types/beautyGenius';
 
-const analysisSteps = [
+export const analysisSteps = [
   { text: "写真をアップロードしていただき、ありがとうございます", delay: 0 },
   { text: "25,000枚の画像と比較しています", delay: 1500 },
   { text: "肌分析が完了しました", delay: 3000 },
