@@ -65,13 +65,13 @@ export const stepVariants = {
 // Progress animation variants
 export const progressVariants = {
   initial: { width: 0 },
-  animate: (progress: number) => ({
-    width: `${progress}%`,
+  animate: {
+    width: "var(--progress-width)",
     transition: {
       duration: 0.5,
       ease: "easeOut",
     },
-  }),
+  },
 };
 
 // Button animation variants

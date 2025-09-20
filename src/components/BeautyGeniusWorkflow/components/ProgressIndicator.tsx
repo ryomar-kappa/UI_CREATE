@@ -50,11 +50,13 @@ export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
       >
         <motion.div
           className="h-full rounded-full"
-          style={{ backgroundColor: colors.accent.main }}
+          style={{ 
+            backgroundColor: colors.accent.main,
+            "--progress-width": `${progress}%`
+          } as any}
           variants={progressVariants}
           initial="initial"
           animate="animate"
-          custom={progress}
         />
       </div>
 
