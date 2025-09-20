@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { stepVariants } from '../../../constants/animations';
+
 import { useReducedMotion } from '../../../utils/accessibility';
 
 interface StepTransitionProps {
@@ -18,22 +18,16 @@ export const StepTransition: React.FC<StepTransitionProps> = ({
 }) => {
   const prefersReducedMotion = useReducedMotion();
 
-  const variants = prefersReducedMotion
-    ? {
-        enter: { opacity: 0 },
-        center: { opacity: 1 },
-        exit: { opacity: 0 },
-      }
-    : stepVariants;
+
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
         key={stepKey}
-        variants={variants}
-        initial="enter"
-        animate="center"
-        exit="exit"
+        initial={prefersReducedMotion ? { opacity: 0 } : { x: 50, opacity: 0 }}
+        animate={prefersReducedMotion ? { opacity: 1 } : { x: 0, opacity: 1 }}
+        exit={prefersReducedMotion ? { opacity: 0 } : { x: -50, opacity: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
         className={`w-full ${className}`}
       >
         {children}

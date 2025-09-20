@@ -49,7 +49,7 @@ export const stepVariants = {
     opacity: 1,
     transition: {
       duration: 0.3,
-      ease: "easeOut",
+      ease: [0, 0, 0.2, 1],
     },
   },
   exit: {
@@ -57,7 +57,7 @@ export const stepVariants = {
     opacity: 0,
     transition: {
       duration: 0.3,
-      ease: "easeIn",
+      ease: [0.4, 0, 1, 1],
     },
   },
 };
@@ -69,7 +69,7 @@ export const progressVariants = {
     width: "var(--progress-width)",
     transition: {
       duration: 0.5,
-      ease: "easeOut",
+      ease: [0, 0, 0.2, 1],
     },
   },
 };

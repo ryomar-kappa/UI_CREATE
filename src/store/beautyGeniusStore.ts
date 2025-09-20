@@ -40,7 +40,7 @@ export const useBeautyGeniusStore = create<BeautyGeniusStore>((set, get) => ({
 
   setSkinType: (type: SkinType) => set({ skinType: type }),
 
-  setAnalysisResult: (result: AnalysisResult) => set({ analysisResult: result }),
+  setAnalysisResult: (result: AnalysisResult | null) => set({ analysisResult: result }),
 
   setAnalysisStatus: (status: AnalysisStatus) => set({ analysisStatus: status }),
 

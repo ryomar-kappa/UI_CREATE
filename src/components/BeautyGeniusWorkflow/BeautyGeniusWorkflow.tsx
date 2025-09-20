@@ -64,7 +64,7 @@ export const BeautyGeniusWorkflow: React.FC<BeautyGeniusWorkflowProps> = ({
       try {
         clearUploadInterval();
         setImage(file);
-        setAnalysisResult(undefined);
+        setAnalysisResult(null);
         setAnalysisStatus("uploading");
         setUploadProgress(0);
 

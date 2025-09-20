@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { progressVariants } from '../../../constants/animations';
+
 import { colors } from '../../../constants/designTokens';
 import { WorkflowStep } from '../../../types/beautyGenius';
 
@@ -50,13 +50,10 @@ export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
       >
         <motion.div
           className="h-full rounded-full"
-          style={{ 
-            backgroundColor: colors.accent.main,
-            "--progress-width": `${progress}%`
-          } as any}
-          variants={progressVariants}
-          initial="initial"
-          animate="animate"
+          style={{ backgroundColor: colors.accent.main }}
+          animate={{ width: `${progress}%` }}
+          initial={{ width: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         />
       </div>
 

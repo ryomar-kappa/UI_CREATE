@@ -96,7 +96,7 @@ export interface BeautyGeniusStore {
   setImage: (file: File) => void;
   setAge: (age: number) => void;
   setSkinType: (type: SkinType) => void;
-  setAnalysisResult: (result: AnalysisResult) => void;
+  setAnalysisResult: (result: AnalysisResult | null) => void;
   setAnalysisStatus: (status: AnalysisStatus) => void;
   setUploadProgress: (progress: number) => void;
   nextStep: () => void;
