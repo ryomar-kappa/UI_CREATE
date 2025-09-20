@@ -1,18 +1,23 @@
 // Skin analysis step component
 
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   buttonVariants,
   fadeInVariants,
   staggerContainer,
   staggerItem,
-} from '../../../constants/animations';
-import { colors } from '../../../constants/designTokens';
-import { SkinAnalysisProps } from '../../../types/beautyGenius';
-import { analysisSteps } from './AnalysisResultStep';
+} from "../../../constants/animations";
+import { colors } from "../../../constants/designTokens";
+import { SkinAnalysisProps } from "../../../types/beautyGenius";
 
-const FINAL_CHECK_DELAY = 1000;
+export const analysisSteps = [
+  { text: "写真をアップロードしていただき、ありがとうございます", delay: 0 },
+  { text: "25,000枚の画像と比較しています", delay: 1500 },
+  { text: "あなたの肌タイプを判定しています", delay: 3000 },
+];
+
+const FINAL_CHECK_DELAY = 1500;
 const POLL_INTERVAL = 500;
 
 export const SkinAnalysisStep: React.FC<SkinAnalysisProps> = ({
@@ -22,20 +27,25 @@ export const SkinAnalysisStep: React.FC<SkinAnalysisProps> = ({
   onClose,
 }) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [showCompletionMessage, setShowCompletionMessage] = useState(false);
   const hasNavigatedRef = useRef(false);
   const latestStatusRef = useRef(analysisStatus);
 
+  // analysisStatusが変更されるたびに最新の値をrefに保存
   useEffect(() => {
     latestStatusRef.current = analysisStatus;
   }, [analysisStatus]);
 
+  // コンポーネント初期化時に分析ステップのアニメーションタイマーを設定
   useEffect(() => {
     setCurrentStepIndex(0);
     hasNavigatedRef.current = false;
+    setShowCompletionMessage(false);
 
     const timeouts: number[] = [];
     analysisSteps.forEach((step, index) => {
       const timeoutId = window.setTimeout(() => {
+        // 各分析ステップが表示されるタイミングでインデックスを更新
         setCurrentStepIndex(index + 1);
       }, step.delay);
       timeouts.push(timeoutId);
@@ -46,18 +56,28 @@ export const SkinAnalysisStep: React.FC<SkinAnalysisProps> = ({
     };
   }, []);
 
-  const finalStepReached = currentStepIndex >= analysisSteps.length;
-
+  // 全ての分析ステップが完了したら完了メッセージを表示
   useEffect(() => {
-    if (!finalStepReached) {
+    if (currentStepIndex == analysisSteps.length) {
+      const timeout = window.setTimeout(() => {
+        setShowCompletionMessage(true);
+      }, FINAL_CHECK_DELAY);
+      return () => {
+        window.clearTimeout(timeout);
+      };
+    }
+  }, [currentStepIndex]);
+
+  // 分析が完了した後、ポーリングで分析ステータスを監視し、完了時に次のステップに進む
+  useEffect(() => {
+    if (!showCompletionMessage) {
       return;
     }
-
     if (hasNavigatedRef.current) {
       return;
     }
 
-    if (latestStatusRef.current === 'error') {
+    if (latestStatusRef.current === "error") {
       return;
     }
 
@@ -68,11 +88,11 @@ export const SkinAnalysisStep: React.FC<SkinAnalysisProps> = ({
           return;
         }
 
-        if (latestStatusRef.current === 'complete') {
+        if (latestStatusRef.current === "complete") {
           hasNavigatedRef.current = true;
           onNext();
-        } else if (latestStatusRef.current === 'error') {
-          // stop polling on error
+        } else if (latestStatusRef.current === "error") {
+          // エラー時はポーリングを停止
         } else {
           followUpTimeout = window.setTimeout(evaluate, POLL_INTERVAL);
         }
@@ -87,7 +107,7 @@ export const SkinAnalysisStep: React.FC<SkinAnalysisProps> = ({
         window.clearTimeout(followUpTimeout);
       }
     };
-  }, [finalStepReached, onNext]);
+  }, [showCompletionMessage, onNext]);
 
   const renderErrorState = () => (
     <motion.div
@@ -139,9 +159,7 @@ export const SkinAnalysisStep: React.FC<SkinAnalysisProps> = ({
         <div className="w-20 h-20 mx-auto bg-blue-100 rounded-full flex items-center justify-center">
           <div className="animate-spin w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-900">
-          肌を解析しています
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-900">肌を解析しています</h2>
       </motion.div>
 
       <div className="space-y-4">
@@ -161,9 +179,9 @@ export const SkinAnalysisStep: React.FC<SkinAnalysisProps> = ({
         </AnimatePresence>
       </div>
 
-      {analysisStatus === 'error'
+      {analysisStatus === "error"
         ? renderErrorState()
-        : finalStepReached && (
+        : showCompletionMessage && (
             <motion.div
               variants={fadeInVariants}
               initial="initial"
